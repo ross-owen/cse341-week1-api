@@ -1,14 +1,14 @@
 ﻿const express = require('express');
 const app = express();
+const port = process.env.port || 8080;
 
-app.get('/', (req, res) => {
-    res.send('Welcome to the server!');
+app.use((req,res,next)=>{
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    next();
+})
+
+app.use('/', require('./routes/index'));
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
 });
-
-app.get('/ross', (req, res) => {
-    res.send('Ross was here!');
-});
-
-const port = 3000;
-app.listen(process.env.port || port);
-console.log(`Server running on port ${port}`);
